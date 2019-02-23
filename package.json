@@ -1,0 +1,25 @@
+{
+  "name": "crime-investigation-portal",
+  "version": "1.0.0",
+  "description": "A web application that would serve as a system used by a local police department for logging data integrated with an access control mechanism for an information security course",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/suraj44/Crime-Investigation-Portal.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/suraj44/Crime-Investigation-Portal/issues"
+  },
+  "homepage": "https://github.com/suraj44/Crime-Investigation-Portal#readme",
+  "dependencies": {
+    "ejs": "^2.6.1",
+    "express": "^4.16.4",
+    "express-session": "^1.15.6",
+    "html": "^1.0.0"
+  }
+}
