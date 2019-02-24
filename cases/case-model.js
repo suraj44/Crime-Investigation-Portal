@@ -4,7 +4,7 @@ const sql = mysql.createConnection({
     host: "localhost",
     user: "k1ng", 
     password: "kyrgios",
-    database: "fantasyone"
+    database: "crime"
 });
 
 
@@ -36,6 +36,15 @@ function resolveCase(caseid,  callback){
     })
 }
 
+function reopenCase(caseid,  callback){
+    sql.query('UPDATE TABLE cases SET status = 0 where caseid = ?', [caseid], function (err) {
+        if(err) {
+            throw err;
+        }
+        return callback(err);
+    })
+}
+
 function addForensicReport(caseid, report, callback) {
     sql.query('UPDATE TABLE cases SET forensic_report = ? where caseid = ?', [report, caseid], function (err) {
         if(err) {
@@ -45,14 +54,14 @@ function addForensicReport(caseid, report, callback) {
     })
 }
 
-function updateForensicReport(caseid, report, callback) {
+/*function updateForensicReport(caseid, report, callback) {
     sql.query('UPDATE TABLE cases SET forensic_report = ? where caseid = ?', [report, caseid], function (err) {
         if(err) {
             throw err;
         }
         return callback(err);
     })
-}
+}*/
 
 
 function addDetectiveReport(caseid, report ,callback) {
@@ -64,14 +73,14 @@ function addDetectiveReport(caseid, report ,callback) {
     })
 }
 
-function updateDetectiveReport(caseid, report ,callback) {
+/*function updateDetectiveReport(caseid, report ,callback) {
     sql.query('UPDATE TABLE cases SET detective_report = ? where caseid = ?', [report, caseid], function (err) {
         if(err) {
             throw err;
         }
         return callback(err);
     })
-}
+}*/
 
 function updateFIR(caseid, fir ,callback) {
     sql.query('UPDATE TABLE cases SET fir = ? where caseid = ?', [fir, caseid], function (err) {
@@ -91,6 +100,49 @@ function updateOfficer(caseid, officer ,callback) {
     })
 }
 
+function viewCaseOfficials(caseid,callback) {
+    sql.query('SELECT a.detective_name as "Detective", b.scientist_name as "Forensic Scientist" from Detective a, Scientist b, Detective_Case_Link c, Scientist_Case_Link d, cases e WHERE a.detective_id = c.detective_id AND b.scientist_id = d.scientist_id AND e.caseid = ?', [caseid], function (err, results) {
+        if(err) {
+            throw err;
+        }
+        else {
+            return callback(results);
+        }   
+    })
+}
+
+function assignDetective(caseid, detective_id,callback) {
+    sql.query('INSERT INTO Detective_Case_Link VALUES(?,?)', [detective_id, caseid], function (err) {
+        if(err) {
+            throw err;
+        }
+        return callback(err);
+    })
+}
+
+
+function dropDetective(caseid, detective_id,callback) {
+    sql.query('DELETE FROM Detective_Case_Link WHERE detective_id = ? AND caseid = ?', [detective_id, caseid], function (err) {
+        if(err) {
+            throw err;
+        }
+        return callback(err);
+    })
+}
+
+function assignForensicScientist(caseid, scientist_id,callback) {
+    sql.query('INSERT INTO Scientist_Case_Link VALUES(?,?)', [scientist_id, caseid], function (err) {
+        if(err) {
+            throw err;
+        }
+        return callback(err);
+    })
+}
+
+
+
+
+
 
 
 
@@ -103,6 +155,11 @@ module.exports.addDetectiveReport = addDetectiveReport;
 module.exports.updateDetectiveReport = updateDetectiveReport;
 module.exports.updateFIR = updateFIR;
 module.exports.updateOfficer = updateOfficer;
+module.exports.reopenCase = reopenCase;
+module.exports.viewCaseOfficials = viewCaseOfficials;
+module.exports.dropDetective = dropDetective;
+module.exports.assignDetective = assignDetective;
+module.exports.assignForensicScientist = assignForensicScientist;
 
 
 
