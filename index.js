@@ -11,6 +11,9 @@ const appDir = path.dirname(require.main.filename)
 app.set('views', __dirname + '/templates')
 app.set('view engine', 'ejs')
 
+
+app.use("/theme", express.static(__dirname + '/templates/theme'));
+
 app.use(bodyParser.urlencoded({extended: true}));
 app.use('/',routes);
 
