@@ -3,20 +3,27 @@ CREATE DATABASE crime;
 use crime;
 
 CREATE TABLE Officer(officer_id int AUTO_INCREMENT PRIMARY KEY,
-        officer_name varchar(30)
+        officer_name varchar(30),
+        userid varchar(30)
         );
 
 CREATE TABLE Detective(detective_id int AUTO_INCREMENT PRIMARY KEY,
-        detective_name varchar(30)
+        detective_name varchar(30),
+        userid varchar(30)
         );
 
 CREATE TABLE Scientist(scientist_id int AUTO_INCREMENT PRIMARY KEY,
-        scientist_name varchar(30)
+        scientist_name varchar(30),
+        userid varchar(30)
         );
 
 CREATE TABLE Lieutenant(lieutenant_id int AUTO_INCREMENT PRIMARY KEY,
-        lieutenant_name varchar(30)
+        lieutenant_name varchar(30),
+        userid varchar(30)
         );
+
+CREATE TABLE Login(userid  varchar(30), 
+password varchar(300));
 
 
 CREATE TABLE cases(caseid int AUTO_INCREMENT PRIMARY KEY, 
