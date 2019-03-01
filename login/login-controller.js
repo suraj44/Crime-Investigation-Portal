@@ -63,7 +63,7 @@ exports.sign_in = function(req,res) {
 }
 
 exports.loginRequired = function(req,res, next) {
-    if(req.session.username && req.session.role) {
+    if(req.session.username) {
         next();
     } else {
         return res.redirect("authorization_error");
