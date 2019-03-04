@@ -1,6 +1,7 @@
 const express = require('express');
 var path = require('path');
 const controller = require('./login-controller');
+const case_controller = require('../cases/case-controller')
 
 var appDir = path.dirname(require.main.filename);
 
@@ -23,7 +24,7 @@ router.get('/home', function(req,res,next) {
 	} ,function(req,res) {
     console.log("User's role is : " + req.session.role);
     if(req.session.role == 0)
-    res.render('forms')
+    res.render('forms',{username: req.body.username })
     else
     res.render('home')
 })
@@ -45,6 +46,10 @@ router.get('/logout' ,function(req, res) {
 	res.redirect('/');
 })
 
-
+router.post('/home/create_fir', function(req,res) {
+    case_controller.createFir(req,res);
+    console.log(req.session.username)
+    res.redirect('/home')
+})
 
 module.exports = router

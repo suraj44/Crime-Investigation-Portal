@@ -150,9 +150,9 @@ function assignForensicScientist(caseid, scientist_id,callback) {
 module.exports.createCase = createCase;
 module.exports.resolveCase = resolveCase;
 module.exports.addForensicReport = addForensicReport;
-module.exports.updateForensicReport = updateForensicReport;
+//module.exports.updateForensicReport = updateForensicReport;
 module.exports.addDetectiveReport = addDetectiveReport;
-module.exports.updateDetectiveReport = updateDetectiveReport;
+//module.exports.updateDetectiveReport = updateDetectiveReport;
 module.exports.updateFIR = updateFIR;
 module.exports.updateOfficer = updateOfficer;
 module.exports.reopenCase = reopenCase;
