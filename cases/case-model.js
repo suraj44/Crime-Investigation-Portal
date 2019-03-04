@@ -139,6 +139,18 @@ function assignForensicScientist(caseid, scientist_id,callback) {
     })
 }
 
+function getMaxCaseID(callback) {
+    sql.query('SELECT MAX(caseid) as \'max_case_id\' from cases',function(err, results){
+        if(err) {
+            throw err;
+        }
+        else
+        {
+            return callback(results);
+        }
+    })
+}
+
 
 
 
@@ -160,6 +172,7 @@ module.exports.viewCaseOfficials = viewCaseOfficials;
 module.exports.dropDetective = dropDetective;
 module.exports.assignDetective = assignDetective;
 module.exports.assignForensicScientist = assignForensicScientist;
+module.exports.getMaxCaseID = getMaxCaseID;
 
 
 

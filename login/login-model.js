@@ -58,3 +58,12 @@ exports.doesLieutenantExist = function(userid, callback) {
         return callback(results);
     })
 }
+
+exports.getOfficerID = function(userid, callback) {
+    sql.query('SELECT officer_id from Officer where userid = ?',[userid], function(err, results){
+        if(err) {
+            throw err;
+        }
+        return callback(results);
+    })
+}
