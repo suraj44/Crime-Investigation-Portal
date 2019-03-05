@@ -151,6 +151,18 @@ function getMaxCaseID(callback) {
     })
 }
 
+function getNumberOpenCases(callback) {
+    sql.query('select count(*) as "open_case_count" from cases where solved_status = 0', function(err,results){
+        if(err)
+        {
+            throw err;
+        }
+        else{
+            return callback(results);
+        }
+    })
+}
+
 
 
 
@@ -173,6 +185,6 @@ module.exports.dropDetective = dropDetective;
 module.exports.assignDetective = assignDetective;
 module.exports.assignForensicScientist = assignForensicScientist;
 module.exports.getMaxCaseID = getMaxCaseID;
-
+module.exports.getNumberOpenCases = getNumberOpenCases;
 
 
