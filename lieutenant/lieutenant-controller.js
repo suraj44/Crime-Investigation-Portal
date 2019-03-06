@@ -16,3 +16,18 @@ exports.addDetectivesToCases = function(req,res) {
         } ) 
       });
 } 
+
+exports.removeDetectivesToCases = function(req,res) {
+    // parse the caseid from request
+    caseid = 0;
+
+    // TODO: parse detective IDs from request and store in list
+
+    list = []
+
+    list.forEach(function(listItem, index){
+        model.dropDetective(casid, listItem,function(result) {
+            ;
+        } ) 
+      });
+} 

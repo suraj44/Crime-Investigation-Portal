@@ -15,6 +15,10 @@ router.get('/login', function(req,res) {
     res.render('login')
 })
 
+router.get('/test_case', function(req,res) {
+    case_controller.readFir(2);
+})
+
 router.post('/login', function(req,res) {
     controller.sign_in(req,res);
 })

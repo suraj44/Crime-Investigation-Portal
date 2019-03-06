@@ -163,6 +163,17 @@ function getNumberOpenCases(callback) {
     })
 }
 
+function getCaseReport(caseid, callback) {
+    sql.query('select fir from cases where caseid =  ?', [caseid],function(err,results){
+        if(err)
+        {
+            throw err;
+        }
+        else{
+            return callback(results);
+        }
+    })
+}
 
 
 
@@ -186,5 +197,6 @@ module.exports.assignDetective = assignDetective;
 module.exports.assignForensicScientist = assignForensicScientist;
 module.exports.getMaxCaseID = getMaxCaseID;
 module.exports.getNumberOpenCases = getNumberOpenCases;
+module.exports.getCaseReport = getCaseReport;
 
 

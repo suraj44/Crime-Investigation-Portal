@@ -38,6 +38,21 @@ exports.createFir = function(req,res){
     }) 
 }
 
+exports.readFir = function(caseid) {
+    model.getCaseReport(caseid,function(result) {
+        pathToReport = result[0].fir;
+
+        fs.readFile(pathToReport, function(err,data){
+            if (!err) {
+                console.log('received data: ' + data);
+            } else {
+                console.log(err);
+            }
+        });
+
+    })
+}
+
 exports.openCaseCount = function(req,res) {
     model.getNumberOpenCases(function(result){
         return result[0].open_case_count;
