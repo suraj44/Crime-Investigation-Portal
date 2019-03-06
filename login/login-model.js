@@ -67,3 +67,21 @@ exports.getOfficerID = function(userid, callback) {
         return callback(results);
     })
 }
+
+exports.getDetectiveID = function(userid, callback) {
+    sql.query('SELECT detective_id from Detective where userid = ?',[userid], function(err, results){
+        if(err) {
+            throw err;
+        }
+        return callback(results);
+    })
+}
+
+exports.getScientistID = function(userid, callback) {
+    sql.query('SELECT scientist_id from Scientist where userid = ?',[userid], function(err, results){
+        if(err) {
+            throw err;
+        }
+        return callback(results);
+    })
+}

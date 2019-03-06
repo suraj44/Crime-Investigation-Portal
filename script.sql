@@ -32,14 +32,13 @@ CREATE TABLE cases(caseid int AUTO_INCREMENT PRIMARY KEY,
         eye_witness varchar(100),
         reporting_date datetime,
         officer_id int,
-        detective_report varchar(100) default NULL,
-        forensic_report varchar(100) default NULL,
         FOREIGN KEY o1(officer_id) REFERENCES Officer(officer_id));
 
 
 CREATE TABLE Scientist_Case_Link (
         scientist_id int,
         caseid int,
+        forensic_report varchar(100) default NULL,
         FOREIGN KEY f2(caseid) REFERENCES cases(caseid),
         FOREIGN KEY f3(scientist_id) REFERENCES Scientist(scientist_id)
         );
@@ -48,6 +47,7 @@ CREATE TABLE Scientist_Case_Link (
 CREATE TABLE Detective_Case_Link (
         detective_id int,
         caseid int,
+        detective_report varchar(100) default NULL,
         FOREIGN KEY f2(caseid) REFERENCES cases(caseid),
         FOREIGN KEY f3(detective_id) REFERENCES Detective(detective_id)
         );

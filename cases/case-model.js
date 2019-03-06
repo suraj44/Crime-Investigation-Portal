@@ -45,12 +45,23 @@ function reopenCase(caseid,  callback){
     })
 }
 
-function addForensicReport(caseid, report, callback) {
-    sql.query('UPDATE TABLE cases SET forensic_report = ? where caseid = ?', [report, caseid], function (err) {
+function addForensicReport(caseid,scientist_id, report, callback) {
+    sql.query('UPDATE TABLE Scientist_Case_Link SET forensic_report = ? where caseid = ? AND scientist_id = ?', [report, caseid,scientist_id], function (err) {
         if(err) {
             throw err;
         }
         return callback(err);
+    })
+}
+
+function getForensicReport(caseid, scientist_id, callback) {
+    sql.query('SELECT forensic_report from Detective_Case_Link where caseid = ? and scientist_id = ?', [caseid, scientist_id], function (err, results) {
+        if(err) {
+            throw err;
+        }
+        else {
+            return callback(results);
+        }   
     })
 }
 
@@ -64,12 +75,23 @@ function addForensicReport(caseid, report, callback) {
 }*/
 
 
-function addDetectiveReport(caseid, report ,callback) {
-    sql.query('UPDATE TABLE cases SET detective_report = ? where caseid = ?', [report, caseid], function (err) {
+function addDetectiveReport(caseid, detective_id, report ,callback) {
+    sql.query('UPDATE TABLE Detective_Case_Link SET detective_report = ? where caseid = ? AND detective_id = ?', [report, caseid, detective_id], function (err) {
         if(err) {
             throw err;
         }
         return callback(err);
+    })
+}
+
+function getDetectiveReport(caseid, detective_id, callback) {
+    sql.query('SELECT detective_report from Detective_Case_Link where caseid = ? and detective_id = ?', [caseid, detective_id], function (err, results) {
+        if(err) {
+            throw err;
+        }
+        else {
+            return callback(results);
+        }   
     })
 }
 
@@ -112,7 +134,7 @@ function viewCaseOfficials(caseid,callback) {
 }
 
 function assignDetective(caseid, detective_id,callback) {
-    sql.query('INSERT INTO Detective_Case_Link VALUES(?,?)', [detective_id, caseid], function (err) {
+    sql.query('INSERT INTO Detective_Case_Link(detective_id, caseid) VALUES(?,?)', [detective_id, caseid], function (err) {
         if(err) {
             throw err;
         }
@@ -131,7 +153,7 @@ function dropDetective(caseid, detective_id,callback) {
 }
 
 function assignForensicScientist(caseid, scientist_id,callback) {
-    sql.query('INSERT INTO Scientist_Case_Link VALUES(?,?)', [scientist_id, caseid], function (err) {
+    sql.query('INSERT INTO Scientist_Case_Link(scientist_id, caseid) VALUES(?,?)', [scientist_id, caseid], function (err) {
         if(err) {
             throw err;
         }
@@ -198,5 +220,7 @@ module.exports.assignForensicScientist = assignForensicScientist;
 module.exports.getMaxCaseID = getMaxCaseID;
 module.exports.getNumberOpenCases = getNumberOpenCases;
 module.exports.getCaseReport = getCaseReport;
+module.exports.getDetectiveReport = getDetectiveReport;
+module.exports.getForensicReport = getForensicReport;
 
 

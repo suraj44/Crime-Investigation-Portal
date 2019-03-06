@@ -57,7 +57,7 @@ router.get('/logout' ,function(req, res) {
 })
 
 router.post('/home/create_fir', function(req,res) {
-    case_controller.createFir(req,res);
+    case_controller.createFir(req);
     console.log(req.session.username)
     res.redirect('/home')
 })
