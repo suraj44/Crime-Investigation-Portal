@@ -22,7 +22,7 @@ exports.sign_in = function(req,res) {
         } else {
             req.session.username = username;
             req.session.role = null;
-            var finished = _.after(3, doRender);
+            var finished = _.after(4, doRender);
             model.doesOfficerExist(username , function(result) {
                 if(result.length != 0) {
                     req.session.role = 0;
@@ -47,6 +47,13 @@ exports.sign_in = function(req,res) {
                 finished();
             })
 
+            model.doesScientistExist(username, function(result) {
+                if(result.length != 0) {
+                    req.session.role = 3;
+                    console.log("Scientist")
+                }
+                finished();
+            })
 
             // req.session.role = get his role - detective ,officer etc
             function doRender() {

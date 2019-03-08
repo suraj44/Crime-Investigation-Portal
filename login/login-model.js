@@ -59,6 +59,16 @@ exports.doesLieutenantExist = function(userid, callback) {
     })
 }
 
+exports.doesScientistExist = function(userid, callback) {
+    sql.query('SELECT userid from Scientist where userid = ?',[userid] ,function(err, results){
+        if (err) {
+            throw err;
+        }
+        console.log(results);
+        return callback(results);
+    })
+}
+
 exports.getOfficerID = function(userid, callback) {
     sql.query('SELECT officer_id from Officer where userid = ?',[userid], function(err, results){
         if(err) {
