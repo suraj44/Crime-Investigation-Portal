@@ -39,7 +39,7 @@ exports.createFir = function(req){
 }
 
 exports.createDetectiveReport = function(req){
-    caseid = req.body.caseid;
+    caseid = req.session.caseid;
     report = req.body.report;
     string_to_write = report;
     if (!fs.existsSync(appDir+'/'+req.session.username)){

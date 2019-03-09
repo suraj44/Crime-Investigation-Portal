@@ -47,6 +47,22 @@ router.get('/home', function(req,res,next) {
     }
 })
 
+router.get('/home/create_report/:caseid', function(req,res,next) {
+	controller.loginRequired(req,res,next);
+	} ,function(req,res)  {
+        caseid = req.params['caseid'];
+        req.session.caseid = caseid;
+        res.render('detective_create_report', {caseid: caseid})
+})
+
+router.post('/home/create_report/:caseid', function(req,res,next) {
+	controller.loginRequired(req,res,next);
+	} ,function(req,res)  {
+        caseid = req.params['caseid'];
+        case_controller.createDetectiveReport(req);
+        res.redirect('/home')
+})
+
 router.get("/authorization_error", function(req,res) {
     message = "FORBIDDEN";
     desc = "This page is classified.";

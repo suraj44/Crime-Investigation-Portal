@@ -87,7 +87,7 @@ function getScientistCases(scientist_id, callback) {
 
 
 function addDetectiveReport(caseid, detective_id, report ,callback) {
-    sql.query('UPDATE TABLE Detective_Case_Link SET detective_report = ? where caseid = ? AND detective_id = ?', [report, caseid, detective_id], function (err) {
+    sql.query('UPDATE Detective_Case_Link SET detective_report = ? where caseid = ? AND detective_id = ?', [report, caseid, detective_id], function (err) {
         if(err) {
             throw err;
         }
