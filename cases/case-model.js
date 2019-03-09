@@ -87,6 +87,18 @@ function getNumberOpenCases(callback) {
     })
 }
 
+function getNumberClosedCases(callback) {
+    sql.query('select count(*) as "closed_case_count" from cases where solved_status = 1', function(err,results){
+        if(err)
+        {
+            throw err;
+        }
+        else{
+            return callback(results);
+        }
+    })
+}
+
 function getOpenCasesInfo(callback) {
     sql.query('select a.caseid, b.officer_name, a.fir from cases a, Officer b where a.solved_status = 0',function(err,results){
         if(err)
@@ -100,14 +112,14 @@ function getOpenCasesInfo(callback) {
 }
 
 function getAvailableDetectives(caseid,callback){
-    sql.query('select detective_name from Detective where Detective.detective_id NOT IN (select detective_id from Detective_Case_Link where caseid =?)',[caseid],function(err,results){
+    sql.query('select detective_id, detective_name from Detective where Detective.detective_id NOT IN (select detective_id from Detective_Case_Link where caseid =?)',[caseid],function(err,results){
         if(err) throw err;
         return callback(results);
     })
 }
 
 function getAvailableScientists(caseid,callback){
-    sql.query('select scientist_name from Scientist where Scientist.scientist_id NOT IN (select scientist_id from Scientist_Case_Link where caseid =?)',[caseid],function(err,results){
+    sql.query('select scientist_id, scientist_name from Scientist where Scientist.scientist_id NOT IN (select scientist_id from Scientist_Case_Link where caseid =?)',[caseid],function(err,results){
         if(err) throw err;
         return callback(results);
     })
@@ -123,6 +135,7 @@ module.exports.updateOfficer = updateOfficer;
 module.exports.reopenCase = reopenCase;
 module.exports.getMaxCaseID = getMaxCaseID;
 module.exports.getNumberOpenCases = getNumberOpenCases;
+module.exports.getNumberClosedCases = getNumberClosedCases;
 module.exports.getOpenCasesInfo = getOpenCasesInfo;
 module.exports.getAvailableDetectives = getAvailableDetectives;
 module.exports.getAvailableScientists = getAvailableScientists;

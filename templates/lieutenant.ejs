@@ -100,9 +100,9 @@
                 <div class="statistic-block block">
                   <div class="progress-details d-flex align-items-end justify-content-between">
                     <div class="title">
-                      <div class="icon"><i class="icon-user-1"></i></div><strong>New Clients</strong>
+                      <div class="icon"><i class="icon-user-1"></i></div><strong>Solved Cases</strong>
                     </div>
-                    <div class="number dashtext-1">27</div>
+                    <div class="number dashtext-1"><%= closed_case_count %></div>
                   </div>
                   <div class="progress progress-template">
                     <div role="progressbar" style="width: 30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100" class="progress-bar progress-bar-template dashbg-1"></div>
@@ -194,7 +194,7 @@
                               </div>
                           <!-- Modal Ends Here -->
                           </td>
-                          <td><button class="btn btn-primary">Assign Detective</button></td>
+                          <td><a href="/home/assign_detective/<%= allCases[i].caseid %>"><button class="btn btn-primary">Assign Detective</button></a></td>
                           <td><button class="btn btn-primary">Assign Forensic Scientist</button></td>
                         </tr>
                         <% } %>

@@ -33,15 +33,31 @@ router.get('/home', function(req,res,next) {
     {
         case_model.getNumberOpenCases(function(result){
             open_case_count = result[0].open_case_count;
-            case_model.getOpenCasesInfo(function(result){
-                res.render('lieutenant',{username: req.session.username, open_case_count:open_case_count, allCases: result })
+            case_model.getNumberClosedCases(function(result){
+                closed_case_count = result[0].closed_case_count;
+                case_model.getOpenCasesInfo(function(result){
+                res.render('lieutenant',{username: req.session.username, open_case_count:open_case_count,closed_case_count:closed_case_count, allCases: result })
             })
         })  
+    })
     }
     else{
         res.render('officer',{username:req.session.username})
     }
 })
+
+
+router.get('/home/assign_detective/:caseID',function(req,res){
+    caseid = req.params['caseID']
+    case_model.getAvailableDetectives(caseid, function(result){
+        console.log(result)
+        available_detectives = result;
+        res.render('assign_detective',{available_detectives:available_detectives,username:req.session.username,caseid:caseid})
+    })
+})
+
+
+
 
 router.get("/authorization_error", function(req,res) {
     message = "FORBIDDEN";
