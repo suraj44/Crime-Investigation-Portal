@@ -107,12 +107,24 @@ function getDetectiveReport(caseid, detective_id, callback) {
 }
 
 function getDetectiveCases(detective_id, callback) {
-    sql.query('SELECT caseid from Detective_Case_Link where  detective_id = ?', [detective_id], function (err, results) {
+    sql.query('SELECT caseid, detective_report from Detective_Case_Link where  detective_id = ?', [detective_id], function (err, results) {
         if(err) {
             throw err;
         }
         else {
             return callback(results);
+        }   
+    })
+}
+
+
+function deleteDetectiveCase(detective_id, caseid, callback) {
+    sql.query('update Detective_Case_Link set detective_report = NULL where detective_id = ? and caseid = ? ', [detective_id,caseid], function (err, results) {
+        if(err) {
+            throw err;
+        }
+        else {
+            return callback();
         }   
     })
 }
@@ -246,5 +258,6 @@ module.exports.getDetectiveReport = getDetectiveReport;
 module.exports.getForensicReport = getForensicReport;
 module.exports.getDetectiveCases = getDetectiveCases;
 module.exports.getScientistCases =getScientistCases;
+module.exports.deleteDetectiveCase =deleteDetectiveCase;
 
 

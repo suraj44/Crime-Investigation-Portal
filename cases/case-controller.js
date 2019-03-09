@@ -59,11 +59,31 @@ exports.createDetectiveReport = function(req){
                 }); 
         })
     })
-    
+}
+
+exports.getDetectiveReport = function(req, callback) {
+    caseid = req.session.caseid
+    var pathToReport  = appDir + '/' + req.session.username + '/case_' + caseid +'.txt'
+    fs.readFile(pathToReport, function(err,data){
+        if (!err) {
+            return callback(data)
+        } else {
+            throw err;
+        }
+    });
+}
+
+exports.deleteDetectiveReport = function(req) {
+    caseid = req.session.caseid
+    var pathToReport  = appDir + '/' + req.session.username + '/case_' + caseid +'.txt'
+    fs.unlink(pathToReport, (err) => {
+        if (err) throw err;
+        console.log('file was deleted');
+      });
 }
 
 exports.createForensicReport = function(req){
-    caseid = req.body.caseid;
+    caseid = req.session.caseid;
     report = req.body.report;
     string_to_write = report;
     if (!fs.existsSync(appDir+'/'+req.session.username)){

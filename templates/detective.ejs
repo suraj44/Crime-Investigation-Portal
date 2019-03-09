@@ -168,8 +168,13 @@
                             <% for(var i=0; i<cases.length; i++) {%>
                             <tr>
                               <th scope="row"><%= cases[i].caseid %> </th>
-                              <th scope="row"><a href = "/home/create_report/<%= cases[i].caseid %>"><button class = "btn btn-secondary">Add Report</button></a></th>
-                              <th scope="row"><button class = "btn btn-primary">Delete Report</button> </th>
+                              <% if (cases[i].detective_report) {%>
+                                <th scope="row"><a href = "/home/edit_report/<%= cases[i].caseid %>"><button class = "btn btn-secondary">Edit Report</button></a></th>
+                                <th scope="row"><a  href = "/home/delete_report/<%= cases[i].caseid %>"><button class = "btn btn-primary">Delete Report</button></a></th>
+                              <% } else {%>
+                                <th scope="row"><a href = "/home/create_report/<%= cases[i].caseid %>"><button class = "btn btn-secondary">Add Report</button></a></th>
+                              <% } %>
+                              
                             </tr>
                             <% } %>
                           </tbody>
