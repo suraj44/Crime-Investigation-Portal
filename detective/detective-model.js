@@ -20,7 +20,7 @@ sql.connect(function (err) {
 
 
 function addDetectiveReport(caseid, detective_id, report ,callback) {
-    sql.query('UPDATE TABLE Detective_Case_Link SET detective_report = ? where caseid = ? AND detective_id = ?', [report, caseid, detective_id], function (err) {
+    sql.query('UPDATE Detective_Case_Link SET detective_report = ? where caseid = ? AND detective_id = ?', [report, caseid, detective_id], function (err) {
         if(err) {
             throw err;
         }
@@ -40,7 +40,7 @@ function getDetectiveReport(caseid, detective_id, callback) {
 }
 
 function getDetectiveCases(detective_id, callback) {
-    sql.query('SELECT caseid from Detective_Case_Link detective_id = ?', [detective_id], function (err, results) {
+    sql.query('SELECT caseid, detective_report from Detective_Case_Link where  detective_id = ?', [detective_id], function (err, results) {
         if(err) {
             throw err;
         }
@@ -50,6 +50,18 @@ function getDetectiveCases(detective_id, callback) {
     })
 }
 
+function deleteDetectiveCase(detective_id, caseid, callback) {
+    sql.query('update Detective_Case_Link set detective_report = NULL where detective_id = ? and caseid = ? ', [detective_id,caseid], function (err, results) {
+        if(err) {
+            throw err;
+        }
+        else {
+            return callback();
+        }   
+    })
+}
+
 module.exports.addDetectiveReport = addDetectiveReport;
 module.exports.getDetectiveReport = getDetectiveReport;
 module.exports.getDetectiveCases = getDetectiveCases;
+module.exports.deleteDetectiveCase =deleteDetectiveCase;

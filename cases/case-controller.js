@@ -1,5 +1,6 @@
 const model = require('./case-model');
 const login_model = require('../login/login-model');
+const det_model = require('../detective/detective-model');
 var path = require('path');
 var appDir = path.dirname(require.main.filename);
 var fs = require('fs')
@@ -51,7 +52,7 @@ exports.createDetectiveReport = function(req){
     login_model.getDetectiveID(req.session.username, function(result){
         detective_id = result[0].detective_id;
         console.log(detective_id);
-        model.addDetectiveReport(caseid,parseInt(detective_id), filepath, function(err){
+        det_model.addDetectiveReport(caseid,parseInt(detective_id), filepath, function(err){
             if(err) throw err;
             fs.writeFile(filepath,string_to_write, function (err) {
                 if (err) throw err;

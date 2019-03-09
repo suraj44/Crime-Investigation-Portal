@@ -3,6 +3,7 @@ var path = require('path');
 const controller = require('./login-controller');
 const case_controller = require('../cases/case-controller')
 const case_model = require('../cases/case-model')
+const det_model = require('../detective/detective-model')
 var appDir = path.dirname(require.main.filename);
 
 var router = express.Router();
@@ -31,7 +32,7 @@ router.get('/home', function(req,res,next) {
         res.render('officer',{username: req.session.username })
     else if(req.session.role==1) {
         console.log("ID IS " + req.session.lol);
-        case_model.getDetectiveCases(req.session.lol, function(result){
+        det_model.getDetectiveCases(req.session.lol, function(result){
             console.log(result)
             res.render('detective',{username: req.session.username, cases:result })
         })
@@ -96,7 +97,7 @@ router.get('/home/delete_report/:caseid', function(req,res,next) {
 	} ,function(req,res)  {
         caseid = req.params['caseid'];
         req.session.caseid = caseid;
-        case_model.deleteDetectiveCase(req.session.lol, caseid, function() {
+        det_model.deleteDetectiveCase(req.session.lol, caseid, function() {
             case_controller.deleteDetectiveReport(req)
             req.session.caseid = null;
             res.redirect('/home')
