@@ -3,6 +3,7 @@ var path = require('path');
 const controller = require('./login-controller');
 const case_controller = require('../cases/case-controller')
 const case_model = require('../cases/case-model')
+const lieutenant_model = require('../lieutenant/lieutenant-model')
 var appDir = path.dirname(require.main.filename);
 
 var router = express.Router();
@@ -36,7 +37,9 @@ router.get('/home', function(req,res,next) {
             case_model.getNumberClosedCases(function(result){
                 closed_case_count = result[0].closed_case_count;
                 case_model.getOpenCasesInfo(function(result){
+                console.log("Reached Here!")
                 res.render('lieutenant',{username: req.session.username, open_case_count:open_case_count,closed_case_count:closed_case_count, allCases: result })
+                console.log("After render!")
             })
         })  
     })
@@ -56,7 +59,14 @@ router.get('/home/assign_detective/:caseID',function(req,res){
     })
 })
 
-
+router.get('/home/assign_scientist/:caseID',function(req,res){
+    caseid = req.params['caseID']
+    case_model.getAvailableScientists(caseid, function(result){
+        console.log(result)
+        available_scientists = result;
+        res.render('assign_scientist',{available_scientists:available_scientists,username:req.session.username,caseid:caseid})
+    })
+})
 
 
 router.get("/authorization_error", function(req,res) {
@@ -81,5 +91,13 @@ router.post('/home/create_fir', function(req,res) {
     console.log(req.session.username)
     res.redirect('/home')
 })
+
+router.post('/home/detectives_assigned',function(req,res){
+    console.log(req.body.caseid);
+    lieutenant_model.assignDetective(req.body.caseid,req.body.detective_ids[0],function(err){
+        if(err) throw err;
+    })
+})
+
 
 module.exports = router
