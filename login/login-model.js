@@ -39,7 +39,7 @@ exports.doesOfficerExist = function(userid, callback) {
 }
 
 exports.doesDetectiveExist = function(userid, callback) {
-    sql.query('SELECT userid from Detective where userid = ?',[userid] ,function(err, results){
+    sql.query('SELECT detective_id from Detective where userid = ?',[userid] ,function(err, results){
         if (err) {
             throw err;
         }

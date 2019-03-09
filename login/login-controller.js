@@ -34,7 +34,10 @@ exports.sign_in = function(req,res) {
             model.doesDetectiveExist(username, function(result) {
                 if(result.length != 0) {
                     req.session.role = 1;
-                    console.log("detective")
+                    console.log("LOK HERE " + result[0].detective_id)
+                    req.session.lol = result[0].detective_id
+                    console.log("detective "+ result[0].detective_id)
+                    console.log("detective "+ req.session.lol)
                 }
                 finished();
             })
