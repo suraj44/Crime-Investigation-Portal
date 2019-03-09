@@ -141,9 +141,20 @@ router.post('/home/create_fir', function(req,res) {
 
 router.post('/home/detectives_assigned',function(req,res){
     console.log(req.body.caseid);
-    lieutenant_model.assignDetective(req.body.caseid,req.body.detective_ids[0],function(err){
-        if(err) throw err;
-    })
+    for(var i = 0; i<req.body.detective_ids.length; i++){
+        lieutenant_model.assignDetective(req.body.caseid,req.body.detective_ids[i],function(err){
+            if(err) throw err;
+        })
+    }
+})
+
+router.post('/home/scientists_assigned',function(req,res){
+    console.log(req.body.caseid);
+    for(var i = 0; i<req.body.scientist_ids.length; i++){
+        lieutenant_model.assignForensicScientist(req.body.caseid,req.body.scientist_ids[i],function(err){
+            if(err) throw err;
+        })
+    }
 })
 
 

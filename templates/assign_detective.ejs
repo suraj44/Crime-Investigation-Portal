@@ -164,10 +164,7 @@
             $.each($("input[name='option']:checked"), function(){            
               detectives.push($(this).val());
             });
-          var result_dict = {}
           var caseid = document.getElementById("caseid").innerHTML;
-          result_dict["caseid"] = caseid;
-          result_dict["detective_ids"] = detectives;
             $.ajax({
               type: "POST",
               url: "/home/detectives_assigned",
