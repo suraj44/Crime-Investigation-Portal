@@ -28,8 +28,16 @@ router.get('/home', function(req,res,next) {
 	} ,function(req,res) {
     console.log("User's role is : " + req.session.role);
     if(req.session.role == 0)
-    res.render('officer',{username: req.session.username })
-    else
+        res.render('officer',{username: req.session.username })
+    else if(req.session.role==1) {
+        console.log("ID IS " + req.session.lol);
+        case_model.getDetectiveCases(req.session.lol, function(result){
+            console.log(result)
+            res.render('detective',{username: req.session.username, cases:result })
+        })
+        
+    }
+    else if(req.session.role == 2)
     {
         case_model.getNumberOpenCases(function(result){
             open_case_count = result[0].open_case_count;

@@ -107,7 +107,7 @@ function getDetectiveReport(caseid, detective_id, callback) {
 }
 
 function getDetectiveCases(detective_id, callback) {
-    sql.query('SELECT caseid from Detective_Case_Link detective_id = ?', [detective_id], function (err, results) {
+    sql.query('SELECT caseid from Detective_Case_Link where  detective_id = ?', [detective_id], function (err, results) {
         if(err) {
             throw err;
         }
