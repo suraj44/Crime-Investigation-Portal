@@ -99,24 +99,24 @@
               <div class="col-lg-3"></div>
               <div class="col-lg-6">
                 <div class="block">
-                  <div class="title"><strong>List of Available Detectives for Case <%= caseid %></strong></div>
+                  <div class="title"><strong>List of Available Scientists for Case <%= caseid %></strong></div>
                   <div class="table-responsive"> 
                     <table class="table table-striped table-hover">
                       <thead>
                         <tr>
-                          <th>Detective ID</th>
-                          <th>Detective Name</th>
+                          <th>Scientist ID</th>
+                          <th>Scientist Name</th>
                           <th>Assign?</th>
                         </tr>
                       </thead>
                       <tbody>
-                        <% for ( var i=0; i<available_detectives.length; i++) { %>
+                        <% for ( var i=0; i<available_scientists.length; i++) { %>
                         <tr>
-                          <td scope="row"><%= available_detectives[i].detective_id %></td>
-                          <td><%= available_detectives[i].detective_name %></td>
+                          <td scope="row"><%= available_scientists[i].scientist_id %></td>
+                          <td><%= available_scientists[i].scientist_name %></td>
                           <td>
                             <div class="i-checks">
-                                <input name="option" id="detective<%= available_detectives[i].detective_id %>" type="checkbox" value="<%= available_detectives[i].detective_id %>" class="checkbox-template">
+                                <input id="scientist<%= available_scientists[i].scientist_id %>" type="checkbox" value="" class="checkbox-template">
                             </div>
                           </td>
                         </tr>
@@ -131,8 +131,7 @@
             <div class="row">
                 <div class="col-lg-3"></div>
                 <div class="col-lg-6">
-                    <button id="assign" class="btn btn-primary">Assign</button></a>
-                    <div id="caseid" style="display:none"><%= caseid %></div>
+                    <a href="/home"><button class="btn btn-primary">GO HOME</button></a>
                 </div>
                 <div class="col-lg-3"></div>
             </div>
@@ -157,30 +156,5 @@
     <script src="/theme/vendor/jquery-validation/jquery.validate.min.js"></script>
     <script src="/theme/js/charts-home.js"></script>
     <script src="/theme/js/front.js"></script>  
-    <script type="text/javascript">
-      $(document).ready(function() {
-        $("#assign").click(function(){
-          var detectives = [];
-            $.each($("input[name='option']:checked"), function(){            
-              detectives.push($(this).val());
-            });
-          var result_dict = {}
-          var caseid = document.getElementById("caseid").innerHTML;
-          result_dict["caseid"] = caseid;
-          result_dict["detective_ids"] = detectives;
-            $.ajax({
-              type: "POST",
-              url: "/home/detectives_assigned",
-              dataType: "json",
-              data: {
-                caseid: caseid,
-                detective_ids: detectives
-              },
-              success: location.href = "/home"
-            })
-            //location.href = "/home"
-          });
-      });
-  </script>
   </body>
 </html>
