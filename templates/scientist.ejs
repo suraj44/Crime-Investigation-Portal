@@ -3,7 +3,7 @@
   <head> 
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>CIP Home</title>
+    <title>Scientist Home</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="all,follow">
@@ -143,35 +143,48 @@
         <!-- Breadcrumb-->
         <div class="container-fluid">
           <ul class="breadcrumb">
-            <li class="breadcrumb-item"><a href="#">Detective Home</a></li>
+            <li class="breadcrumb-item"><a href="#">Scientist Home</a></li>
           </ul>
         </div>
         <section class="no-padding-top">
           <div class="container-fluid">
               <!-- Form Elements -->
-              <div class="col-lg-12">
-                <div class="block">
-                  <div class="title"><strong>Add report for Case #<%= caseid %></strong></div>
-                  <div class="block-body">
-                    <form method="POST" action = "/home/detective/create_report/<%= caseid %>" class="form-horizontal" id = "myForm">
-                      <div class="form-group row">
-                        <label class="col-sm-3 form-control-label">New Report</label>
-                        <div class="col-sm-9">
-                          <textarea class="form-control" name="report"  rows="5"><%= currReport %></textarea>
-                        </div>
+              <%if (cases.length == 0) { %>
+                <h2>No cases assigned to you yet</h2>
+             <% } else {  %>
+                <div class="col-lg-6">
+                    <div class="block">
+                      <div class="title"><strong>Your Cases</strong></div>
+                      <div class="table-responsive"> 
+                        <table class="table table-striped table-hover">
+                          <thead>
+                            <tr>
+                              <th>Case ID</th>
+                              <th>  </th>
+                              <th>  </th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <% for(var i=0; i<cases.length; i++) {%>
+                            <tr>
+                              <th scope="row"><%= cases[i].caseid %> </th>
+                              <% if (cases[i].forensic_report) {%>
+                                <th scope="row"><a href = "/home/scientist/edit_report/<%= cases[i].caseid %>"><button class = "btn btn-secondary">Edit Report</button></a></th>
+                                <th scope="row"><a  href = "/home/scientist/delete_report/<%= cases[i].caseid %>"><button class = "btn btn-primary">Delete Report</button></a></th>
+                              <% } else {%>
+                                <th scope="row"><a href = "/home/scientist/create_report/<%= cases[i].caseid %>"><button class = "btn btn-secondary">Add Report</button></a></th>
+                              <% } %>
+                              
+                            </tr>
+                            <% } %>
+                          </tbody>
+                        </table>
                       </div>
-                      <div class="line"></div>
-                      <div class="form-group row">
-                        <div class="col-sm-9 ml-auto">
-                          <button onclick = "resetFIR()" class="btn btn-secondary">Clear Report</button>
-                          <button type="submit" class="btn btn-primary">Create Report</button>
-                        </div>
-                      </div>
-                    </form>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </div>
+             <% } %>
+              
           </div>
         </section>
         <footer class="footer">

@@ -19,7 +19,7 @@ sql.connect(function (err) {
 
 
 function addForensicReport(caseid,scientist_id, report, callback) {
-    sql.query('UPDATE TABLE Scientist_Case_Link SET forensic_report = ? where caseid = ? AND scientist_id = ?', [report, caseid,scientist_id], function (err) {
+    sql.query('UPDATE Scientist_Case_Link SET forensic_report = ? where caseid = ? AND scientist_id = ?', [report, caseid,scientist_id], function (err) {
         if(err) {
             throw err;
         }
@@ -38,8 +38,10 @@ function getForensicReport(caseid, scientist_id, callback) {
     })
 }
 
+
+
 function getScientistCases(scientist_id, callback) {
-    sql.query('SELECT caseid from Scientist_Case_Link scientist_id = ?', [scientist_id], function (err, results) {
+    sql.query('SELECT caseid, forensic_report from Scientist_Case_Link where scientist_id = ?', [scientist_id], function (err, results) {
         if(err) {
             throw err;
         }
@@ -49,6 +51,18 @@ function getScientistCases(scientist_id, callback) {
     })
 }
 
+function deleteScientistCase(scientist_id, caseid, callback) {
+    sql.query('update Scientist_Case_Link set forensic_report = NULL where scientist_id = ? and caseid = ? ', [scientist_id,caseid], function (err, results) {
+        if(err) {
+            throw err;
+        }
+        else {
+            return callback();
+        }   
+    })
+}
+
 module.exports.addForensicReport = addForensicReport;
 module.exports.getForensicReport = getForensicReport;
 module.exports.getScientistCases = getScientistCases;
+module.exports.deleteScientistCase = deleteScientistCase;

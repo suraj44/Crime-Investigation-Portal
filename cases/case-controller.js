@@ -1,6 +1,7 @@
 const model = require('./case-model');
 const login_model = require('../login/login-model');
 const det_model = require('../detective/detective-model');
+const scientist_model = require('../scientist/scientist-model')
 var path = require('path');
 var appDir = path.dirname(require.main.filename);
 var fs = require('fs')
@@ -95,8 +96,7 @@ exports.createForensicReport = function(req){
     console.log(filepath)
     login_model.getScientistID(req.session.username, function(result){
         scientist_id = result[0].scientist_id;
-        console.log(detective_id);
-        model.addForensicReport(caseid,parseInt(scientist_id), filepath, function(err){
+        scientist_model.addForensicReport(caseid,parseInt(scientist_id), filepath, function(err){
             if(err) throw err;
             fs.writeFile(filepath,string_to_write, function (err) {
                 if (err) throw err;
@@ -107,6 +107,26 @@ exports.createForensicReport = function(req){
     
 }
 
+exports.getForensicReport = function(req, callback) {
+    caseid = req.session.caseid
+    var pathToReport  = appDir + '/' + req.session.username + '/case_' + caseid +'.txt'
+    fs.readFile(pathToReport, function(err,data){
+        if (!err) {
+            return callback(data)
+        } else {
+            throw err;
+        }
+    });
+}
+
+exports.deleteForensicReport = function(req) {
+    caseid = req.session.caseid
+    var pathToReport  = appDir + '/' + req.session.username + '/case_' + caseid +'.txt'
+    fs.unlink(pathToReport, (err) => {
+        if (err) throw err;
+        console.log('file was deleted');
+      });
+}
 
 
 exports.readFir = function(caseid) {

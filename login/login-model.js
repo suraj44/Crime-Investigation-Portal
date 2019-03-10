@@ -60,7 +60,7 @@ exports.doesLieutenantExist = function(userid, callback) {
 }
 
 exports.doesScientistExist = function(userid, callback) {
-    sql.query('SELECT userid from Scientist where userid = ?',[userid] ,function(err, results){
+    sql.query('SELECT scientist_id from Scientist where userid = ?',[userid] ,function(err, results){
         if (err) {
             throw err;
         }

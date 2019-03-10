@@ -53,6 +53,7 @@ exports.sign_in = function(req,res) {
             model.doesScientistExist(username, function(result) {
                 if(result.length != 0) {
                     req.session.role = 3;
+                    req.session.lol = result[0].scientist_id
                     console.log("Scientist")
                 }
                 finished();
