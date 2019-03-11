@@ -216,11 +216,19 @@
                         </tr>
                       </thead>
                       <tbody>
+                        <% if (allDetectiveReports.length == 0) { %>
+                          <p>No reports to show</p>
+                        <% } else { %>
+                        <% for(var i = 0; i< allDetectiveReports.length; i++) { %>
                         <tr>
-                          <th scope="row">1</th>
-                          <td>Mark</td>
-                          <td>Otto</td>
+                          <th scope="row"><%= allDetectiveReports[i].caseid %></th>
+                          <td><%= allDetectiveReports[i].detective_name %></td>
+                          <td>
+                            <button type="button" class="btn btn-info">View Report</button>
+                          </td>
                         </tr>
+                        <% } %>
+                        <% } %>
                       </tbody>
                     </table>
                   </div>
@@ -239,11 +247,15 @@
                         </tr>
                       </thead>
                       <tbody>
+                        <% for(var i=0; i<allForensicReports.length; i++) { %>
                         <tr>
-                          <th scope="row">1</th>
-                          <td>Mark</td>
-                          <td>Otto</td>
+                          <th scope="row"><%= allForensicReports[i].caseid %></th>
+                          <td><%= allForensicReports[i].scientist_name %></td>
+                          <td>
+                            <button type="button" class="btn btn-info">View Report</button>
+                          </td>
                         </tr>
+                        <% } %>
                       </tbody>
                     </table>
                   </div>

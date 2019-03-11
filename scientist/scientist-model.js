@@ -62,7 +62,17 @@ function deleteScientistCase(scientist_id, caseid, callback) {
     })
 }
 
+function getListForensicReports(callback) {
+    sql.query('select a.caseid, a.forensic_report, b.scientist_name from Scientist_Case_Link a, Scientist b where a.forensic_report is not null and a.scientist_id = b.scientist_id', function(err,results){
+        if(err) throw err;
+        else{
+            return callback(results);
+        }
+    })
+}
+
 module.exports.addForensicReport = addForensicReport;
 module.exports.getForensicReport = getForensicReport;
 module.exports.getScientistCases = getScientistCases;
 module.exports.deleteScientistCase = deleteScientistCase;
+module.exports.getListForensicReports = getListForensicReports;

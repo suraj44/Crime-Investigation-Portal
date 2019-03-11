@@ -50,7 +50,9 @@ router.get('/home', function(req,res,next) {
                 allCases = result;
                 det_model.getListDetectiveReports(function(result){
                     allDetectiveReports = result;
-                    res.render('lieutenant',{username: req.session.username, open_case_count:open_case_count,closed_case_count:closed_case_count, allCases: allCases })
+                    scientist_model.getListForensicReports(function(result){
+                        res.render('lieutenant',{username: req.session.username, open_case_count:open_case_count,closed_case_count:closed_case_count, allCases: allCases, allDetectiveReports: allDetectiveReports, allForensicReports: result })
+                    })
                 })
             })
         })  
