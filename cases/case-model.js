@@ -125,6 +125,17 @@ function getAvailableScientists(caseid,callback){
     })
 }
 
+function getCaseReport(caseid, callback) {
+    sql.query('SELECT fir from cases where caseid = ?', [caseid], function (err, results) {
+        if(err) {
+            throw err;
+        }
+        else {
+            return callback(results);
+        }   
+    })
+}
+
 
 
 
@@ -139,3 +150,4 @@ module.exports.getNumberClosedCases = getNumberClosedCases;
 module.exports.getOpenCasesInfo = getOpenCasesInfo;
 module.exports.getAvailableDetectives = getAvailableDetectives;
 module.exports.getAvailableScientists = getAvailableScientists;
+module.exports.getCaseReport = getCaseReport;

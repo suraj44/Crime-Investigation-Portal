@@ -129,13 +129,13 @@ exports.deleteForensicReport = function(req) {
 }
 
 
-exports.readFir = function(caseid) {
+exports.readFir = function(caseid, callback) {
     model.getCaseReport(caseid,function(result) {
         pathToReport = result[0].fir;
-
+        console.log(pathToReport)
         fs.readFile(pathToReport, function(err,data){
             if (!err) {
-                console.log('received data: ' + data);
+                return callback(data)
             } else {
                 console.log(err);
             }

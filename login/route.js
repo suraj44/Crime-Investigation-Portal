@@ -47,9 +47,11 @@ router.get('/home', function(req,res,next) {
             case_model.getNumberClosedCases(function(result){
                 closed_case_count = result[0].closed_case_count;
                 case_model.getOpenCasesInfo(function(result){
-                console.log("Reached Here!")
-                res.render('lieutenant',{username: req.session.username, open_case_count:open_case_count,closed_case_count:closed_case_count, allCases: result })
-                console.log("After render!")
+                allCases = result;
+                det_model.getListDetectiveReports(function(result){
+                    allDetectiveReports = result;
+                    res.render('lieutenant',{username: req.session.username, open_case_count:open_case_count,closed_case_count:closed_case_count, allCases: allCases })
+                })
             })
         })  
     })
@@ -111,6 +113,16 @@ router.get('/home/detective/delete_report/:caseid', function(req,res,next) {
         })
 })
 
+router.get('/home/detective/view_fir/:caseid', function(req,res,next) {
+	controller.loginRequired(req,res,next);
+	} ,function(req,res)  {
+        caseid = req.params['caseid'];
+        req.session.caseid = caseid;
+        console.log("VIEW FIR "+ caseid)
+        case_controller.readFir(caseid, function(FIR) {
+            res.render('detective_view_fir', { FIR: FIR})
+        });
+})
 
 router.get('/home/scientist/create_report/:caseid', function(req,res,next) {
 	controller.loginRequired(req,res,next);
