@@ -27,7 +27,7 @@ router.post('/login', function(req,res) {
 })
 
 router.get('/home', function(req,res,next) {
-	controller.loginRequired(req,res,next);
+	controller.loginRequired(req,res,next,[0,1,2,3]);
 	} ,function(req,res) {
     console.log("User's role is : " + req.session.role);
     if(req.session.role == 0)
@@ -67,7 +67,9 @@ router.get('/home', function(req,res,next) {
 })
 
 
-router.get('/home/assign_detective/:caseID',function(req,res){
+router.get('/home/assign_detective/:caseID', function(req,res,next) {
+	controller.loginRequired(req,res,next, [2]);
+	} , function(req,res){
     caseid = req.params['caseID']
     case_model.getAvailableDetectives(caseid, function(result){
         console.log(result)
@@ -77,7 +79,7 @@ router.get('/home/assign_detective/:caseID',function(req,res){
 })
 
 router.get('/home/detective/create_report/:caseid', function(req,res,next) {
-	controller.loginRequired(req,res,next);
+	controller.loginRequired(req,res,next,[1]);
 	} ,function(req,res)  {
         caseid = req.params['caseid'];
         req.session.caseid = caseid;
@@ -85,7 +87,7 @@ router.get('/home/detective/create_report/:caseid', function(req,res,next) {
 })
 
 router.post('/home/detective/create_report/:caseid', function(req,res,next) {
-	controller.loginRequired(req,res,next);
+	controller.loginRequired(req,res,next,[1]);
 	} ,function(req,res)  {
         caseid = req.params['caseid'];
         case_controller.createDetectiveReport(req);
@@ -94,7 +96,7 @@ router.post('/home/detective/create_report/:caseid', function(req,res,next) {
 })
 
 router.get('/home/detective/edit_report/:caseid', function(req,res,next) {
-	controller.loginRequired(req,res,next);
+	controller.loginRequired(req,res,next,[1]);
 	} ,function(req,res)  {
         caseid = req.params['caseid'];
         req.session.caseid = caseid;
@@ -104,7 +106,7 @@ router.get('/home/detective/edit_report/:caseid', function(req,res,next) {
 })
 
 router.get('/home/detective/delete_report/:caseid', function(req,res,next) {
-	controller.loginRequired(req,res,next);
+	controller.loginRequired(req,res,next,[1]);
 	} ,function(req,res)  {
         caseid = req.params['caseid'];
         req.session.caseid = caseid;
@@ -116,7 +118,7 @@ router.get('/home/detective/delete_report/:caseid', function(req,res,next) {
 })
 
 router.get('/home/detective/view_fir/:caseid', function(req,res,next) {
-	controller.loginRequired(req,res,next);
+	controller.loginRequired(req,res,next,[1]);
 	} ,function(req,res)  {
         caseid = req.params['caseid'];
         req.session.caseid = caseid;
@@ -127,7 +129,7 @@ router.get('/home/detective/view_fir/:caseid', function(req,res,next) {
 })
 
 router.get('/home/scientist/create_report/:caseid', function(req,res,next) {
-	controller.loginRequired(req,res,next);
+	controller.loginRequired(req,res,next,[3]);
 	} ,function(req,res)  {
         caseid = req.params['caseid'];
         req.session.caseid = caseid;
@@ -135,7 +137,7 @@ router.get('/home/scientist/create_report/:caseid', function(req,res,next) {
 })
 
 router.post('/home/scientist/create_report/:caseid', function(req,res,next) {
-	controller.loginRequired(req,res,next);
+	controller.loginRequired(req,res,next,[3]);
 	} ,function(req,res)  {
         caseid = req.params['caseid'];
         case_controller.createForensicReport(req);
@@ -144,7 +146,7 @@ router.post('/home/scientist/create_report/:caseid', function(req,res,next) {
 })
 
 router.get('/home/scientist/edit_report/:caseid', function(req,res,next) {
-	controller.loginRequired(req,res,next);
+	controller.loginRequired(req,res,next,[3]);
 	} ,function(req,res)  {
         caseid = req.params['caseid'];
         req.session.caseid = caseid;
@@ -154,7 +156,7 @@ router.get('/home/scientist/edit_report/:caseid', function(req,res,next) {
 })
 
 router.get('/home/scientist/delete_report/:caseid', function(req,res,next) {
-	controller.loginRequired(req,res,next);
+	controller.loginRequired(req,res,next,[3]);
 	} ,function(req,res)  {
         caseid = req.params['caseid'];
         req.session.caseid = caseid;
@@ -165,7 +167,9 @@ router.get('/home/scientist/delete_report/:caseid', function(req,res,next) {
         })
 })
 
-router.get('/home/assign_scientist/:caseID',function(req,res){
+router.get('/home/assign_scientist/:caseID', function(req,res,next) {
+	controller.loginRequired(req,res,next,[2]);
+	} ,function(req,res){
     caseid = req.params['caseID']
     case_model.getAvailableScientists(caseid, function(result){
         console.log(result)
@@ -191,13 +195,17 @@ router.get('/logout' ,function(req, res) {
 	res.redirect('/');
 })
 
-router.post('/home/create_fir', function(req,res) {
+router.post('/home/create_fir', function(req,res,next) {
+	controller.loginRequired(req,res,next,[0]);
+	} ,function(req,res) {
     case_controller.createFir(req);
     console.log(req.session.username)
     res.redirect('/home')
 })
 
-router.post('/home/detectives_assigned',function(req,res){
+router.post('/home/detectives_assigned',function(req,res,next) {
+	controller.loginRequired(req,res,next,[2]);
+	} ,function(req,res){
     console.log(req.body.caseid);
     for(var i = 0; i<req.body.detective_ids.length; i++){
         lieutenant_model.assignDetective(req.body.caseid,req.body.detective_ids[i],function(err){
@@ -206,7 +214,9 @@ router.post('/home/detectives_assigned',function(req,res){
     }
 })
 
-router.post('/home/scientists_assigned',function(req,res){
+router.post('/home/scientists_assigned',function(req,res,next) {
+	controller.loginRequired(req,res,next[2]);
+	} ,function(req,res){
     console.log(req.body.caseid);
     for(var i = 0; i<req.body.scientist_ids.length; i++){
         lieutenant_model.assignForensicScientist(req.body.caseid,req.body.scientist_ids[i],function(err){
