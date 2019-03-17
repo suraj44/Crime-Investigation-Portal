@@ -28,7 +28,7 @@ function createCase(fir,eye_witness,reporting_date,officer_id, callback){
 }
 
 function resolveCase(caseid,  callback){
-    sql.query('UPDATE TABLE cases SET status = 1 where caseid = ?', [caseid], function (err) {
+    sql.query('UPDATE cases SET solved_status = 1 where caseid = ?', [caseid], function (err) {
         if(err) {
             throw err;
         }
@@ -37,7 +37,7 @@ function resolveCase(caseid,  callback){
 }
 
 function reopenCase(caseid,  callback){
-    sql.query('UPDATE TABLE cases SET status = 0 where caseid = ?', [caseid], function (err) {
+    sql.query('UPDATE cases SET solved_status = 0 where caseid = ?', [caseid], function (err) {
         if(err) {
             throw err;
         }

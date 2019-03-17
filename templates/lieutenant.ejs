@@ -107,7 +107,7 @@
         <section class="no-padding-bottom">
           <div class="container-fluid">
             <div class="row">
-              <div class="col-lg-6">
+              <div class="col-lg-12">
                 <div class="block">
                   <div class="title"><strong>Pending Cases FIR Entries</strong></div>
                   <div class="table-responsive"> 
@@ -119,6 +119,7 @@
                           <th>FIR</th>
                           <th>Assign Detective</th>
                           <th>Assign Forensic Scientist</th>
+                          <th>Resolve Case</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -149,6 +150,7 @@
                           </td>
                           <td><a href="/home/assign_detective/<%= allCases[i].caseid %>"><button class="btn btn-primary">Assign Detective</button></a></td>
                           <td><a href="/home/assign_scientist/<%= allCases[i].caseid %>"><button class="btn btn-primary">Assign Forensic Scientist</button></a></td>
+                          <td><a href="/home/resolve_case/<%= allCases[i].caseid %>"><button class="btn btn-primary">Close Case</button></td>
                         </tr>
                         <% } %>
                       </tbody>
@@ -156,7 +158,9 @@
                   </div>
                 </div>
               </div>
-              <div class="col-lg-3">
+            </div>
+            <div class="row">
+              <div class="col-lg-6">
                 <div class="block">
                   <div class="title"><strong>Pending Cases Detective Reports</strong></div>
                   <div class="table-responsive"> 
@@ -187,7 +191,7 @@
                   </div>
                 </div>
               </div>
-              <div class="col-lg-3">
+              <div class="col-lg-6">
                 <div class="block">
                   <div class="title"><strong>Pending Cases Forensic Reports</strong></div>
                   <div class="table-responsive"> 

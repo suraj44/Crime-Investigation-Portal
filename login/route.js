@@ -257,5 +257,16 @@ router.get('/home/lieutenant/view_forensic_report/:caseid-:scientist_id', functi
         });
 })
 
+router.get('/home/resolve_case/:caseid', function(req,res,next){
+    controller.loginRequired(req,res,next,[2]);
+    } , function(req,res){
+        caseid = req.params['caseid'];
+        case_model.resolveCase(caseid,function(err){
+            if(err) throw err;
+            else
+            res.redirect('/home');
+        });
+    })
+
 
 module.exports = router
