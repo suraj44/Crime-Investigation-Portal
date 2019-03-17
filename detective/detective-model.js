@@ -62,7 +62,7 @@ function deleteDetectiveCase(detective_id, caseid, callback) {
 }
 
 function getListDetectiveReports(callback) {
-    sql.query('select a.caseid, a.detective_report, b.detective_name from Detective_Case_Link a, Detective b where a.detective_report is not null and a.detective_id = b.detective_id', function(err,results){
+    sql.query('select a.caseid, a.detective_report, b.detective_name, b.detective_id from Detective_Case_Link a, Detective b where a.detective_report is not null and a.detective_id = b.detective_id', function(err,results){
         if(err) throw err;
         else{
             return callback(results);

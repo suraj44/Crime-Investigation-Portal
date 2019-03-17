@@ -28,7 +28,7 @@ function addForensicReport(caseid,scientist_id, report, callback) {
 }
 
 function getForensicReport(caseid, scientist_id, callback) {
-    sql.query('SELECT forensic_report from Detective_Case_Link where caseid = ? and scientist_id = ?', [caseid, scientist_id], function (err, results) {
+    sql.query('SELECT forensic_report from Scientist_Case_Link where caseid = ? and scientist_id = ?', [caseid, scientist_id], function (err, results) {
         if(err) {
             throw err;
         }
@@ -63,7 +63,7 @@ function deleteScientistCase(scientist_id, caseid, callback) {
 }
 
 function getListForensicReports(callback) {
-    sql.query('select a.caseid, a.forensic_report, b.scientist_name from Scientist_Case_Link a, Scientist b where a.forensic_report is not null and a.scientist_id = b.scientist_id', function(err,results){
+    sql.query('select a.caseid, a.forensic_report, b.scientist_name, b.scientist_id from Scientist_Case_Link a, Scientist b where a.forensic_report is not null and a.scientist_id = b.scientist_id', function(err,results){
         if(err) throw err;
         else{
             return callback(results);

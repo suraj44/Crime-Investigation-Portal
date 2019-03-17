@@ -3,7 +3,7 @@
   <head> 
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>CIP Home</title>
+    <title>Detective View FIR</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="all,follow">
@@ -28,6 +28,17 @@
   <body>
     <header class="header">   
       <nav class="navbar navbar-expand-lg">
+        <div class="search-panel">
+          <div class="search-inner d-flex align-items-center justify-content-center">
+            <div class="close-btn">Close <i class="fa fa-close"></i></div>
+            <form id="searchForm" action="#">
+              <div class="form-group">
+                <input type="search" name="search" placeholder="What are you searching for...">
+                <button type="submit" class="submit">Search</button>
+              </div>
+            </form>
+          </div>
+        </div>
         <div class="container-fluid d-flex align-items-center justify-content-between">
           <div class="navbar-header">
             <!-- Navbar Header--><a href="index.html" class="navbar-brand">
@@ -36,6 +47,7 @@
             <!-- Sidebar Toggle Btn-->
             <button class="sidebar-toggle"><i class="fa fa-long-arrow-left"></i></button>
           </div>
+          <div class="right-menu list-inline no-margin-bottom">    
             <!-- Log out               -->
             <div class="list-inline-item logout"><a id="logout" href="/logout" class="nav-link"> <span class="d-none d-sm-inline">Logout </span><i class="icon-logout"></i></a></div>
           </div>
@@ -50,7 +62,7 @@
           <div class="avatar"><img src="/theme/img/avatar-6.jpg" alt="..." class="img-fluid rounded-circle"></div>
           <div class="title">
             <h1 class="h5"><%= username %></h1>
-            <p>Detective</p>
+            <p>Lieutenant</p>
           </div>
         </div>
         <!-- Sidebar Navidation Menus--><span class="heading">Main</span>
@@ -61,30 +73,30 @@
       </nav>
       <!-- Sidebar Navigation end-->
       <div class="page-content">
-          <div class="page-header">
-              <div class="container-fluid">
-                <h2 class="h5 no-margin-bottom">Dashboard</h2>
-              </div>
-            </div>
+        <!-- Page Header-->
+        <div class="page-header">
+          <div class="container-fluid">
+            <h2 class="h5">Dashboard</h2>
+          </div>
+        </div>
         <section class="no-padding-top">
           <div class="container-fluid">
               <!-- Form Elements -->
               <div class="col-lg-12">
                 <div class="block">
-                  <div class="title"><strong>Add report for Case #<%= caseid %></strong></div>
+                  <div class="title"><strong>Forensic Report for Case #<%= caseid %></strong></div>
                   <div class="block-body">
-                    <form method="POST" action = "/home/detective/create_report/<%= caseid %>" class="form-horizontal" id = "myForm">
+                    <form method="GET" action = "/home" class="form-horizontal" id = "myForm"></form>
                       <div class="form-group row">
-                        <label class="col-sm-3 form-control-label">New Report</label>
+                        <label class="col-sm-3 form-control-label">Report</label>
                         <div class="col-sm-9">
-                          <textarea class="form-control" name="report"  rows="5"><%= currReport %></textarea>
+                          <textarea disabled class="form-control" name="report"  rows="5"><%= report %></textarea>
                         </div>
                       </div>
                       <div class="line"></div>
                       <div class="form-group row">
                         <div class="col-sm-9 ml-auto">
-                          <button onclick = "resetFIR()" class="btn btn-secondary">Clear Report</button>
-                          <button type="submit" class="btn btn-primary">Create Report</button>
+                          <a href = "/home"><button type="submit" class="btn btn-primary">Go Back</button></a>
                         </div>
                       </div>
                     </form>

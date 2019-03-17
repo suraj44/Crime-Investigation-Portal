@@ -143,13 +143,14 @@ exports.readFir = function(caseid, callback) {
 
     })
 }
-exports.readDetectiveReport = function(caseid,detective_id) {
-    model.getDetectiveReport(caseid, detective_id, function(result) {
+exports.readDetectiveReport = function(caseid,detective_id,callback) {
+    det_model.getDetectiveReport(caseid, detective_id, function(result) {
         pathToReport = result[0].detective_report;
 
         fs.readFile(pathToReport, function(err,data){
             if (!err) {
                 console.log('received data: ' + data);
+                return callback(data);
             } else {
                 console.log(err);
             }
@@ -157,13 +158,13 @@ exports.readDetectiveReport = function(caseid,detective_id) {
 
     })
 }
-exports.readForensicReport = function(caseid,scientist_id) {
-    model.getForensicReport(caseid, scientist_id, function(result) {
+exports.readForensicReport = function(caseid,scientist_id,callback) {
+    scientist_model.getForensicReport(caseid, scientist_id, function(result) {
         pathToReport = result[0].forensic_report;
-
         fs.readFile(pathToReport, function(err,data){
             if (!err) {
                 console.log('received data: ' + data);
+                return callback(data);
             } else {
                 console.log(err);
             }

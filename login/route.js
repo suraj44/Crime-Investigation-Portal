@@ -124,7 +124,7 @@ router.get('/home/detective/view_fir/:caseid', function(req,res,next) {
         req.session.caseid = caseid;
         console.log("VIEW FIR "+ caseid)
         case_controller.readFir(caseid, function(FIR) {
-            res.render('detective_view_fir', { FIR: FIR})
+            res.render('detective_view_fir', { FIR: FIR, username: req.session.username})
         });
 })
 
@@ -223,6 +223,31 @@ router.post('/home/scientists_assigned',function(req,res,next) {
             if(err) throw err;
         })
     }
+})
+
+
+router.get('/home/lieutenant/view_detective_report/:caseid-:detective_id', function(req,res,next) {
+	controller.loginRequired(req,res,next,[2]);
+	} ,function(req,res)  {
+        caseid = req.params['caseid'];
+        detective_id = req.params['detective_id'];
+        req.session.caseid = caseid;
+        console.log("VIEW DETECTIVE REPORT "+ caseid)
+        case_controller.readDetectiveReport(caseid,detective_id, function(report) {
+            res.render('lieutenant_view_d_report', { report: report, username:req.session.username})
+        });
+})
+
+router.get('/home/lieutenant/view_forensic_report/:caseid-:scientist_id', function(req,res,next) {
+	controller.loginRequired(req,res,next,[2]);
+	} ,function(req,res)  {
+        caseid = req.params['caseid'];
+        scientist_id = req.params['scientist_id'];
+        req.session.caseid = caseid;
+        console.log("VIEW FORENSIC REPORT "+ caseid)
+        case_controller.readForensicReport(caseid,scientist_id, function(report) {
+            res.render('lieutenant_view_f_report', { report: report, username:req.session.username})
+        });
 })
 
 
