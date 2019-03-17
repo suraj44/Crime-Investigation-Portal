@@ -11,10 +11,15 @@ var appDir = path.dirname(require.main.filename);
 var router = express.Router();
 router.get('/', function(req,res) {
     // if condition
-    res.redirect('login')
+    if(req.session.role)
+        return res.redirect('home')
+    return res.redirect('login')
 })
 
-router.get('/login', function(req,res) {
+router.get('/login', function(req,res,next) {
+	controller.loginRequired(req,res,next,[undefined]);
+	} ,function(req,res) {
+
     res.render('login')
 })
 
@@ -22,7 +27,9 @@ router.get('/test_case', function(req,res) {
     case_controller.readFir(2);
 })
 
-router.post('/login', function(req,res) {
+router.post('/login', function(req,res,next) {
+	controller.loginRequired(req,res,next,[undefined]);
+	} , function(req,res) {
     controller.sign_in(req,res);
 })
 

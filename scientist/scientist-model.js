@@ -41,7 +41,7 @@ function getForensicReport(caseid, scientist_id, callback) {
 
 
 function getScientistCases(scientist_id, callback) {
-    sql.query('SELECT caseid, forensic_report from Scientist_Case_Link where scientist_id = ?', [scientist_id], function (err, results) {
+    sql.query('SELECT Scientist_Case_Link.caseid, forensic_report from Scientist_Case_Link, cases where scientist_id = ? and solved_status = 0', [scientist_id], function (err, results) {
         if(err) {
             throw err;
         }
