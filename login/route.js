@@ -124,14 +124,14 @@ router.get('/home/detective/delete_report/:caseid', function(req,res,next) {
         })
 })
 
-router.get('/home/detective/view_fir/:caseid', function(req,res,next) {
-	controller.loginRequired(req,res,next,[1]);
+router.get('/home/view_fir/:caseid', function(req,res,next) {
+	controller.loginRequired(req,res,next,[1,2]);
 	} ,function(req,res)  {
         caseid = req.params['caseid'];
         req.session.caseid = caseid;
         console.log("VIEW FIR "+ caseid)
         case_controller.readFir(caseid, function(FIR) {
-            res.render('detective_view_fir', { FIR: FIR, username: req.session.username})
+            res.render('view_fir', { FIR: FIR, username: req.session.username})
         });
 })
 

@@ -85,7 +85,7 @@
                 <div class="statistic-block block">
                   <div class="progress-details d-flex align-items-end justify-content-between">
                     <div class="title">
-                      <div class="icon"><i class="icon-user-1"></i></div><strong>Solved Cases</strong>
+                      <div class="icon"><i class="icon-contract"></i></div><strong>Solved Cases</strong>
                     </div>
                     <div class="number dashtext-1"><%= closed_case_count %></div>
                   </div>
@@ -123,35 +123,21 @@
                         </tr>
                       </thead>
                       <tbody>
+                          <% if (allCases.length == 0) { %>
+                            <p>No reports to show</p>
+                          <% } else { %>
                         <% for ( var i=0; i<allCases.length; i++) { %>
                         <tr>
                           <th scope="row"><%= allCases[i].caseid %></th>
                           <td><%= allCases[i].officer_name %></td>
                           <td>
-                            <button type="button" class="btn btn-info" data-toggle="modal" data-target="#case<%= allCases[i].caseid %>" onclick="readFIR('<%= allCases[i].fir %>','content<%= allCases[i].caseid %>')">View FIR</button>
-                            <!-- Modal -->
-                            <div id="case<%= allCases[i].caseid %>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" class="modal fade text-left">
-                                <div role="document" class="modal-dialog">
-                                  <div class="modal-content">
-                                    <div class="modal-header"><strong id="exampleModalLabel" class="modal-title">FIR</strong>
-                                      <button type="button" data-dismiss="modal" aria-label="Close" class="close"><span aria-hidden="true">×</span></button>
-                                    </div>
-                                    <div class="modal-body">
-                                      <p id="content<%= allCases[i].caseid %>"></p>
-                                    </div>
-                                    <div class="modal-footer">
-                                      <button type="button" data-dismiss="modal" class="btn btn-secondary">Close</button>
-                                      <button type="button" class="btn btn-primary">Save changes</button>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                          <!-- Modal Ends Here -->
+                            <a href="/home/view_fir/<%= allCases[i].caseid %>"><button class="btn btn-info">View FIR</button></a>
                           </td>
                           <td><a href="/home/assign_detective/<%= allCases[i].caseid %>"><button class="btn btn-primary">Assign Detective</button></a></td>
                           <td><a href="/home/assign_scientist/<%= allCases[i].caseid %>"><button class="btn btn-primary">Assign Forensic Scientist</button></a></td>
                           <td><a href="/home/resolve_case/<%= allCases[i].caseid %>"><button class="btn btn-primary">Close Case</button></td>
                         </tr>
+                        <% } %>
                         <% } %>
                       </tbody>
                     </table>
@@ -204,6 +190,9 @@
                         </tr>
                       </thead>
                       <tbody>
+                          <% if (allForensicReports.length == 0) { %>
+                            <p>No reports to show</p>
+                          <% } else { %>
                         <% for(var i=0; i<allForensicReports.length; i++) { %>
                         <tr>
                           <th scope="row"><%= allForensicReports[i].caseid %></th>
@@ -212,6 +201,7 @@
                             <a href="/home/lieutenant/view_forensic_report/<%= allForensicReports[i].caseid %>-<%= allForensicReports[i].scientist_id %>"><button class="btn btn-info">View Report</button></a>
                           </td>
                         </tr>
+                        <% } %>
                         <% } %>
                       </tbody>
                     </table>

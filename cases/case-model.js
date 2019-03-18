@@ -100,7 +100,7 @@ function getNumberClosedCases(callback) {
 }
 
 function getOpenCasesInfo(callback) {
-    sql.query('select a.caseid, b.officer_name, a.fir from cases a, Officer b where a.solved_status = 0',function(err,results){
+    sql.query('select a.caseid, b.officer_name, a.fir from cases a, Officer b where a.solved_status = 0 and a.officer_id = b.officer_id',function(err,results){
         if(err)
         {
             throw err;
