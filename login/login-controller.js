@@ -1,6 +1,7 @@
 const model = require('./login-model');
 var path = require('path');
 const sha1 = require('sha1');
+const regex = require('regex')
 
 const _ = require('underscore')
 
@@ -11,6 +12,18 @@ const _ = require('underscore')
  * 2 - Lieutenant
  */
 
+
+var role_permission_dict = {
+    0: ['/home','/home/create_fir'],
+    1: ['/home','/home/view_fir/:caseid','/home/detective/delete_report/:caseid','/home/detective/edit_report/:caseid',
+    '/home/detective/create_report/:caseid'],
+    2: ['/home','/home/detectives_assigned','/home/scientists_assigned',
+        '/home/resolve_case/:caseid','/home/lieutenant/view_forensic_report/:caseid-:scientist_id',
+        '/home/lieutenant/view_detective_report/:caseid-:detective_id', '/home/assign_scientist/:caseID',
+        '/home/view_fir/:caseid','/home/assign_detective/:caseID'],
+    3: ['/home','/home/scientist/delete_report/:caseid','/home/scientist/edit_report/:caseid',
+    '/home/scientist/create_report/:caseid']
+}
 
 exports.sign_in = function(req,res) {
     username = req.body.username;
@@ -73,8 +86,8 @@ exports.sign_in = function(req,res) {
     })
 }
 
-exports.loginRequired = function(req,res, next, roles) {
-    if(roles.includes(req.session.role)) {
+exports.loginRequired = function(req,res, next, role, input_url) {
+    if(role_permission_dict[role].includes(input_url)) {
         next();
     } else {
         return res.redirect("/authorization_error");
