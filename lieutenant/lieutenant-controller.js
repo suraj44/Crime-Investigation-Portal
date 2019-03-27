@@ -11,7 +11,7 @@ exports.addDetectivesToCases = function(req,res) {
     list = []
 
     list.forEach(function(listItem, index){
-        model.assignDetective(casid, listItem,function(result) {
+        model.assignDetective(caseid, listItem,function(result) {
             ;
         } ) 
       });

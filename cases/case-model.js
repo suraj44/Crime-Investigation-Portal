@@ -19,7 +19,7 @@ sql.connect(function (err) {
 
 
 function createCase(fir,eye_witness,reporting_date,officer_id, callback){
-    sql.query('INSERT INTO cases(fir,eye_witness, reporting_date, officer_id) values(?,?,?,?)', [fir,eye_witness,reporting_date, officer_id], function (err) {
+    sql.query('INSERT INTO cases(fir,eye_witness, reporting_date, userid) values(?,?,?,?)', [fir,eye_witness,reporting_date, officer_id], function (err) {
         if(err) {
             throw err;
         }
@@ -46,7 +46,7 @@ function reopenCase(caseid,  callback){
 }
 
 function updateFIR(caseid, fir ,callback) {
-    sql.query('UPDATE TABLE cases SET fir = ? where caseid = ?', [fir, caseid], function (err) {
+    sql.query('UPDATE cases SET fir = ? where caseid = ?', [fir, caseid], function (err) {
         if(err) {
             throw err;
         }
@@ -55,7 +55,7 @@ function updateFIR(caseid, fir ,callback) {
 }
 
 function updateOfficer(caseid, officer ,callback) {
-    sql.query('UPDATE TABLE cases SET officer_id = ? where caseid = ?', [officer, caseid], function (err) {
+    sql.query('UPDATE cases SET userid = ? where caseid = ?', [officer, caseid], function (err) {
         if(err) {
             throw err;
         }
@@ -100,7 +100,7 @@ function getNumberClosedCases(callback) {
 }
 
 function getOpenCasesInfo(callback) {
-    sql.query('select a.caseid, b.officer_name, a.fir from cases a, Officer b where a.solved_status = 0 and a.officer_id = b.officer_id',function(err,results){
+    sql.query('select a.caseid, a.userid, a.fir from cases a where a.solved_status = 0',function(err,results){
         if(err)
         {
             throw err;
@@ -112,14 +112,14 @@ function getOpenCasesInfo(callback) {
 }
 
 function getAvailableDetectives(caseid,callback){
-    sql.query('select detective_id, detective_name from Detective where Detective.detective_id NOT IN (select detective_id from Detective_Case_Link where caseid =?)',[caseid],function(err,results){
+    sql.query('select userid from Users where role = 1 and userid NOT IN (select userid from Detective_Case_Link where caseid =?)',[caseid],function(err,results){
         if(err) throw err;
         return callback(results);
     })
 }
 
 function getAvailableScientists(caseid,callback){
-    sql.query('select scientist_id, scientist_name from Scientist where Scientist.scientist_id NOT IN (select scientist_id from Scientist_Case_Link where caseid =?)',[caseid],function(err,results){
+    sql.query('select userid from Users where role = 3 and userid NOT IN (select userid from Scientist_Case_Link where caseid =?)',[caseid],function(err,results){
         if(err) throw err;
         return callback(results);
     })

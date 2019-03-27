@@ -129,7 +129,7 @@
                         <% for ( var i=0; i<allCases.length; i++) { %>
                         <tr>
                           <th scope="row"><%= allCases[i].caseid %></th>
-                          <td><%= allCases[i].officer_name %></td>
+                          <td><%= allCases[i].userid %></td>
                           <td>
                             <a href="/home/view_fir/<%= allCases[i].caseid %>"><button class="btn btn-info">View FIR</button></a>
                           </td>
@@ -165,9 +165,9 @@
                         <% for(var i = 0; i< allDetectiveReports.length; i++) { %>
                         <tr>
                           <th scope="row"><%= allDetectiveReports[i].caseid %></th>
-                          <td><%= allDetectiveReports[i].detective_name %></td>
+                          <td><%= allDetectiveReports[i].userid %></td>
                           <td>
-                            <a href="/home/lieutenant/view_detective_report/<%= allDetectiveReports[i].caseid %>-<%= allDetectiveReports[i].detective_id %>"><button class="btn btn-info">View Report</button></a>
+                            <a href="/home/lieutenant/view_detective_report/<%= allDetectiveReports[i].caseid %>-<%= allDetectiveReports[i].userid %>"><button class="btn btn-info">View Report</button></a>
                           </td>
                         </tr>
                         <% } %>
@@ -196,9 +196,9 @@
                         <% for(var i=0; i<allForensicReports.length; i++) { %>
                         <tr>
                           <th scope="row"><%= allForensicReports[i].caseid %></th>
-                          <td><%= allForensicReports[i].scientist_name %></td>
+                          <td><%= allForensicReports[i].userid %></td>
                           <td>
-                            <a href="/home/lieutenant/view_forensic_report/<%= allForensicReports[i].caseid %>-<%= allForensicReports[i].scientist_id %>"><button class="btn btn-info">View Report</button></a>
+                            <a href="/home/lieutenant/view_forensic_report/<%= allForensicReports[i].caseid %>-<%= allForensicReports[i].userid %>"><button class="btn btn-info">View Report</button></a>
                           </td>
                         </tr>
                         <% } %>

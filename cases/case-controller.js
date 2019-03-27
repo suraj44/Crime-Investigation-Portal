@@ -26,17 +26,13 @@ exports.createFir = function(req){
         new_case_id = parseInt(max_case_id) + 1;
         var filepath  = appDir + '/' + req.session.username + '/case_' + new_case_id+'.txt'
         console.log(filepath)
-        login_model.getOfficerID(req.session.username, function(result){
-            officer_id = result[0].officer_id;
-            console.log(officer_id);
-            model.createCase(filepath,complainant,date,parseInt(officer_id), function(err){
+            model.createCase(filepath,complainant,date,req.session.username, function(err){
                 if(err) throw err;
                 fs.writeFile(filepath,string_to_write, function (err) {
                     if (err) throw err;
                     console.log('Saved!');
                   }); 
             })
-        })
     }) 
 }
 
@@ -50,17 +46,14 @@ exports.createDetectiveReport = function(req){
 
     var filepath  = appDir + '/' + req.session.username + '/case_' + caseid +'.txt'
     console.log(filepath)
-    login_model.getDetectiveID(req.session.username, function(result){
-        detective_id = result[0].detective_id;
-        console.log(detective_id);
-        det_model.addDetectiveReport(caseid,parseInt(detective_id), filepath, function(err){
+        det_model.addDetectiveReport(caseid,req.session.username, filepath, function(err){
             if(err) throw err;
             fs.writeFile(filepath,string_to_write, function (err) {
                 if (err) throw err;
                 console.log('Saved!');
                 }); 
         })
-    })
+    
 }
 
 exports.getDetectiveReport = function(req, callback) {
@@ -94,16 +87,14 @@ exports.createForensicReport = function(req){
 
     var filepath  = appDir + '/' + req.session.username + '/case_' + caseid +'.txt'
     console.log(filepath)
-    login_model.getScientistID(req.session.username, function(result){
-        scientist_id = result[0].scientist_id;
-        scientist_model.addForensicReport(caseid,parseInt(scientist_id), filepath, function(err){
+        scientist_model.addForensicReport(caseid,req.session.username, filepath, function(err){
             if(err) throw err;
             fs.writeFile(filepath,string_to_write, function (err) {
                 if (err) throw err;
                 console.log('Saved!');
                 }); 
         })
-    })
+
     
 }
 

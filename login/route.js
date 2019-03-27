@@ -32,10 +32,8 @@ router.get('/home', function(req,res,next) {
     if(req.session.role == 0)
         res.render('officer',{username: req.session.username })
     else if(req.session.role==1) {
-        console.log("ID IS " + req.session.lol);
-        det_model.getDetectiveCases(req.session.lol, function(result){
+        det_model.getDetectiveCases(req.session.username, function(result){
             console.log(result)
-            
             res.render('detective',{username: req.session.username, cases:result })
         })
         
@@ -59,10 +57,9 @@ router.get('/home', function(req,res,next) {
     })
     }
     else if(req.session.role == 3) {
-        scientist_model.getScientistCases(req.session.lol, function(result){
+        scientist_model.getScientistCases(req.session.username, function(result){
             res.render('scientist',{username: req.session.username, cases:result})
-        })
-        
+        })   
     }
 })
 
@@ -110,7 +107,7 @@ router.get('/home/detective/delete_report/:caseid', function(req,res,next) {
 	} ,function(req,res)  {
         caseid = req.params['caseid'];
         req.session.caseid = caseid;
-        det_model.deleteDetectiveCase(req.session.lol, caseid, function() {
+        det_model.deleteDetectiveCase(req.session.username, caseid, function() {
             case_controller.deleteDetectiveReport(req)
             req.session.caseid = null;
             res.redirect('/home')
@@ -160,7 +157,7 @@ router.get('/home/scientist/delete_report/:caseid', function(req,res,next) {
 	} ,function(req,res)  {
         caseid = req.params['caseid'];
         req.session.caseid = caseid;
-        scientist_model.deleteScientistCase(req.session.lol, caseid, function() {
+        scientist_model.deleteScientistCase(req.session.username, caseid, function() {
             case_controller.deleteForensicReport(req)
             req.session.caseid = null;
             res.redirect('/home')

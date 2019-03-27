@@ -101,11 +101,11 @@ exports.loginRequired = function(req,res, next, role, input_url) {
                 }
                 return res.redirect("/authorization_error");
                 break;
-                case 3: //scientist
+            case 3: //scientist
                 p = getPermissions(scientist,1);
                 for(var i=0 ; i < p.length;i++) {
                     if (p[i][0] == input_url) {
-                        next();
+                        return next();
                     }
                 }
                 return res.redirect("/authorization_error");

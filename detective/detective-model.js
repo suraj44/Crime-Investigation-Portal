@@ -20,7 +20,7 @@ sql.connect(function (err) {
 
 
 function addDetectiveReport(caseid, detective_id, report ,callback) {
-    sql.query('UPDATE Detective_Case_Link SET detective_report = ? where caseid = ? AND detective_id = ?', [report, caseid, detective_id], function (err) {
+    sql.query('UPDATE Detective_Case_Link SET detective_report = ? where caseid = ? AND userid = ?', [report, caseid, detective_id], function (err) {
         if(err) {
             throw err;
         }
@@ -29,7 +29,7 @@ function addDetectiveReport(caseid, detective_id, report ,callback) {
 }
 
 function getDetectiveReport(caseid, detective_id, callback) {
-    sql.query('SELECT detective_report from Detective_Case_Link where caseid = ? and detective_id = ?', [caseid, detective_id], function (err, results) {
+    sql.query('SELECT detective_report from Detective_Case_Link where caseid = ? and userid = ?', [caseid, detective_id], function (err, results) {
         if(err) {
             throw err;
         }
@@ -40,7 +40,7 @@ function getDetectiveReport(caseid, detective_id, callback) {
 }
 
 function getDetectiveCases(detective_id, callback) {
-    sql.query('SELECT Detective_Case_Link.caseid, detective_report from Detective_Case_Link,cases where detective_id = ? and solved_status =0', [detective_id], function (err, results) {
+    sql.query('SELECT Detective_Case_Link.caseid, detective_report from Detective_Case_Link,cases where Detective_Case_Link.userid = ? and solved_status =0', [detective_id], function (err, results) {
         if(err) {
             throw err;
         }
@@ -51,7 +51,7 @@ function getDetectiveCases(detective_id, callback) {
 }
 
 function deleteDetectiveCase(detective_id, caseid, callback) {
-    sql.query('update Detective_Case_Link set detective_report = NULL where detective_id = ? and caseid = ? ', [detective_id,caseid], function (err, results) {
+    sql.query('update Detective_Case_Link set detective_report = NULL where userid = ? and caseid = ? ', [detective_id,caseid], function (err, results) {
         if(err) {
             throw err;
         }
@@ -62,7 +62,7 @@ function deleteDetectiveCase(detective_id, caseid, callback) {
 }
 
 function getListDetectiveReports(callback) {
-    sql.query('select a.caseid, a.detective_report, b.detective_name, b.detective_id from Detective_Case_Link a, Detective b, cases c where a.detective_report is not null and a.detective_id = b.detective_id and a.caseid = c.caseid and c.solved_status=0', function(err,results){
+    sql.query('select a.caseid, a.detective_report, a.userid from Detective_Case_Link a, cases b where a.detective_report is not null and a.caseid = b.caseid and b.solved_status=0', function(err,results){
         if(err) throw err;
         else{
             return callback(results);

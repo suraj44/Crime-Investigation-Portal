@@ -89,7 +89,6 @@
                     <table class="table table-striped table-hover">
                       <thead>
                         <tr>
-                          <th>Detective ID</th>
                           <th>Detective Name</th>
                           <th>Assign?</th>
                         </tr>
@@ -97,11 +96,10 @@
                       <tbody>
                         <% for ( var i=0; i<available_detectives.length; i++) { %>
                         <tr>
-                          <td scope="row"><%= available_detectives[i].detective_id %></td>
-                          <td><%= available_detectives[i].detective_name %></td>
+                          <td><%= available_detectives[i].userid %></td>
                           <td>
                             <div class="i-checks">
-                                <input name="option" id="detective<%= available_detectives[i].detective_id %>" type="checkbox" value="<%= available_detectives[i].detective_id %>" class="checkbox-template">
+                                <input name="option" id="detective<%= available_detectives[i].userid %>" type="checkbox" value="<%= available_detectives[i].userid %>" class="checkbox-template">
                             </div>
                           </td>
                         </tr>

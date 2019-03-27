@@ -89,7 +89,6 @@
                     <table class="table table-striped table-hover">
                       <thead>
                         <tr>
-                          <th>Scientist ID</th>
                           <th>Scientist Name</th>
                           <th>Assign?</th>
                         </tr>
@@ -97,11 +96,10 @@
                       <tbody>
                         <% for ( var i=0; i<available_scientists.length; i++) { %>
                         <tr>
-                          <td scope="row"><%= available_scientists[i].scientist_id %></td>
-                          <td><%= available_scientists[i].scientist_name %></td>
+                          <td><%= available_scientists[i].userid %></td>
                           <td>
                             <div class="i-checks">
-                                <input name="option" id="scientist<%= available_scientists[i].scientist_id %>" type="checkbox" value="<%= available_scientists[i].scientist_id %>" class="checkbox-template">
+                                <input name="option" id="scientist<%= available_scientists[i].userid %>" type="checkbox" value="<%= available_scientists[i].userid %>" class="checkbox-template">
                             </div>
                           </td>
                         </tr>
