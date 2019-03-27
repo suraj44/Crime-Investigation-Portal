@@ -40,7 +40,7 @@ function getDetectiveReport(caseid, detective_id, callback) {
 }
 
 function getDetectiveCases(detective_id, callback) {
-    sql.query('SELECT Detective_Case_Link.caseid, detective_report from Detective_Case_Link,cases where Detective_Case_Link.userid = ? and solved_status =0', [detective_id], function (err, results) {
+    sql.query('SELECT Detective_Case_Link.caseid, detective_report from Detective_Case_Link,cases where Detective_Case_Link.caseid = cases.caseid and Detective_Case_Link.userid = ? and solved_status =0', [detective_id], function (err, results) {
         if(err) {
             throw err;
         }
