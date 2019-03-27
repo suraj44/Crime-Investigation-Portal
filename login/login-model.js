@@ -19,7 +19,7 @@ sql.connect(function (err) {
 
 
 exports.doesUserExist = function(userid, password, callback) {
-    sql.query('SELECT userid from Login where userid = ? AND password = ?',[userid, password] ,function(err, results){
+    sql.query('SELECT userid,role from Login where userid = ? AND password = ?',[userid, password] ,function(err, results){
         if (err) {
             throw err;
         }
@@ -28,46 +28,6 @@ exports.doesUserExist = function(userid, password, callback) {
     })
 }
 
-exports.doesOfficerExist = function(userid, callback) {
-    sql.query('SELECT userid from Officer where userid = ?',[userid] ,function(err, results){
-        if (err) {
-            throw err;
-        }
-        //console.log(results);
-        return callback(results);
-    })
-}
-
-exports.doesDetectiveExist = function(userid, callback) {
-    sql.query('SELECT detective_id from Detective where userid = ?',[userid] ,function(err, results){
-        if (err) {
-            throw err;
-        }
-        //console.log(results);
-        return callback(results);
-    })
-}
-
-
-exports.doesLieutenantExist = function(userid, callback) {
-    sql.query('SELECT userid from Lieutenant where userid = ?',[userid] ,function(err, results){
-        if (err) {
-            throw err;
-        }
-        //console.log(results);
-        return callback(results);
-    })
-}
-
-exports.doesScientistExist = function(userid, callback) {
-    sql.query('SELECT scientist_id from Scientist where userid = ?',[userid] ,function(err, results){
-        if (err) {
-            throw err;
-        }
-        console.log(results);
-        return callback(results);
-    })
-}
 
 exports.getOfficerID = function(userid, callback) {
     sql.query('SELECT officer_id from Officer where userid = ?',[userid], function(err, results){
