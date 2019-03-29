@@ -24,15 +24,21 @@ var objects = {fir: {r:['/home/view_fir/:caseid'] ,w: ['/home/create_fir']} ,det
             detectives_assigned: {r:['/home/detectives_assigned'],w:[]}, scientists_assigned:{r:['/home/scientists_assigned'],w:[]},
             assign_scientist : {r:[],w:['/home/assign_scientist/:caseID']}, resolve_case:{r:[],w:['/home/resolve_case/:caseid']}}
 
-var officer = {permissions: [['/home', 2], ['/home/create_fir', 0]], children : []}
-var detective = {permissions: [['/home/view_fir/:caseid',1 ],['/home/detective/delete_report/:caseid',1],['/home/detective/edit_report/:caseid',2],
-['/home/detective/create_report/:caseid',1], ['/home/detective/create_report/:caseid',1]], children : [officer]}
-var scientist = {permissions : [['/home/scientist/delete_report/:caseid',1],['/home/scientist/edit_report/:caseid',2],
-['/home/scientist/create_report/:caseid',1]], children : [officer]}
-var lieutenant = {permissions : [['/home/detectives_assigned',2],['/home/scientists_assigned',2],
-['/home/resolve_case/:caseid',2],['/home/lieutenant/view_forensic_report/:caseid-:scientist_id',2],
-['/home/lieutenant/view_detective_report/:caseid-:detective_id',2], ['/home/assign_scientist/:caseID',2],
-['/home/view_fir/:caseid',2],['/home/assign_detective/:caseID',2]], children : [detective, scientist]}
+var officer = {permissions: [[objects.home.r,2], [objects.fir.w,0]], children : []}
+var detective = {permissions: [[objects.detective_report.w, 1], [objects.fir.r,1]], children: [officer]}
+var scientist = {permissions: [[objects.scientist_report.w,1]], children : [officer]}
+var lieutenant = {permissions : [[objects.detectives_assigned.r,2],[objects.scientists_assigned.r,2],[objects.resolve_case.w,2],
+                 [objects.scientist_report.r,2], [objects.detective_report.r,2], [objects.assign_detective.w,2], [objects.assign_scientist.w,2]]
+                , children: [detective, scientist]}
+// var officer = {permissions: [['/home', 2], ['/home/create_fir', 0]], children : []}
+// var detective = {permissions: [['/home/view_fir/:caseid',1 ],['/home/detective/delete_report/:caseid',1],['/home/detective/edit_report/:caseid',2],
+// ['/home/detective/create_report/:caseid',1], ['/home/detective/create_report/:caseid',1]], children : [officer]}
+// var scientist = {permissions : [['/home/scientist/delete_report/:caseid',1],['/home/scientist/edit_report/:caseid',2],
+// ['/home/scientist/create_report/:caseid',1]], children : [officer]}
+// var lieutenant = {permissions : [['/home/detectives_assigned',2],['/home/scientists_assigned',2],
+// ['/home/resolve_case/:caseid',2],['/home/lieutenant/view_forensic_report/:caseid-:scientist_id',2],
+// ['/home/lieutenant/view_detective_report/:caseid-:detective_id',2], ['/home/assign_scientist/:caseID',2],
+// ['/home/view_fir/:caseid',2],['/home/assign_detective/:caseID',2]], children : [detective, scientist]}
 
 
 
