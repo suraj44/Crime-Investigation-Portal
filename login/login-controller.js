@@ -18,10 +18,15 @@ const _ = require('underscore')
 
 var tree = {};
 
+var objects = {fir: {r:['/home/view_fir/:caseid'] ,w: ['/home/create_fir']} ,detective_report : {r:['/home/lieutenant/view_detective_report/:caseid-:detective_id'], w:['/home/detective/create_report/:caseid',
+            '/home/detective/edit_report/:caseid']}, scientist_report: {r: ['/home/lieutenant/view_forensic_report/:caseid-:scientist_id'], w: ['/home/scientist/edit_report/:caseid','/home/scientist/create_report/:caseid'
+            ,'/home/scientist/delete_report/:caseid']}, home: {r:['/home'], w:[]}, assign_detective : {r:[], w:['/home/assign_detective/:caseID']}, 
+            detectives_assigned: {r:['/home/detectives_assigned'],w:[]}, scientists_assigned:{r:['/home/scientists_assigned'],w:[]},
+            assign_scientist : {r:[],w:['/home/assign_scientist/:caseID']}, resolve_case:{r:[],w:['/home/resolve_case/:caseid']}}
 
 var officer = {permissions: [['/home', 2], ['/home/create_fir', 0]], children : []}
 var detective = {permissions: [['/home/view_fir/:caseid',1 ],['/home/detective/delete_report/:caseid',1],['/home/detective/edit_report/:caseid',2],
-['/home/detective/create_report/:caseid',1], ['/home/scientist/create_report/:caseid',1]], children : [officer]}
+['/home/detective/create_report/:caseid',1], ['/home/detective/create_report/:caseid',1]], children : [officer]}
 var scientist = {permissions : [['/home/scientist/delete_report/:caseid',1],['/home/scientist/edit_report/:caseid',2],
 ['/home/scientist/create_report/:caseid',1]], children : [officer]}
 var lieutenant = {permissions : [['/home/detectives_assigned',2],['/home/scientists_assigned',2],
